@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "521830315861",
+    "project_id": "proyecto-movil-personas-tdah",
+    "storage_bucket": "proyecto-movil-personas-tdah.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521830315861:android:f94356837ddc29d41121dc",
+        "android_client_info": {
+          "package_name": "com.example.proyectomovilparapersonascondiscapacidad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521830315861-28hfjsd1064959giq0n86p85vdtij8p8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.proyectomovilparapersonascondiscapacidad",
+            "certificate_hash": "bcd89f262ba5dabd781f0d62fe77dbc8235721c7"
+          }
+        },
+        {
+          "client_id": "521830315861-7vt5rrqpp6mmdmch8dl40rku902gth0l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.proyectomovilparapersonascondiscapacidad",
+            "certificate_hash": "65475beecfa467d41b859806331ee73abee198f0"
+          }
+        },
+        {
+          "client_id": "521830315861-vfm1nrisklc3962mn56c05rhkj3vs32m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.proyectomovilparapersonascondiscapacidad",
+            "certificate_hash": "96e62b15bcb66d7d3396bda3b1b08ed96f83452f"
+          }
+        },
+        {
+          "client_id": "521830315861-gl4h8jrc2up060clt2kpbkk8bcpgtm9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz7dJc7Ldbw2ChvYb1z7JK5rO7p8q0bWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "521830315861-gl4h8jrc2up060clt2kpbkk8bcpgtm9l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
