@@ -9,6 +9,14 @@
     tools:context=".Inicio">
 
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/menuOpciones"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="@android:color/white"
+        app:title="FocusEco" />
+
     <FrameLayout
         android:id="@+id/contenedor"
         android:layout_width="match_parent"
