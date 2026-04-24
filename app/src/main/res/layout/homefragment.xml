@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F0FF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Saludo -->
+        <TextView
+            android:id="@+id/tvSaludo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¡Hola! 👋"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#1C1B1F"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hoy es un buen día para enfocarte"
+            android:textSize="14sp"
+            android:textColor="#49454F"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Card estado de ánimo -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Cómo te sientes hoy?"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1B1F"
+                    android:layout_marginBottom="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/moodGreat"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/ic_launcher_background"
+                        android:text="😄"
+                        android:contentDescription="Me siento muy bien"
+                        android:scaleType="centerInside"/>
+
+                    <ImageButton
+                        android:id="@+id/moodOk"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/ic_launcher_background"
+                        android:contentDescription="Me siento regular"
+                        android:scaleType="centerInside"/>
+
+                    <ImageButton
+                        android:id="@+id/moodBad"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/ic_launcher_background"
+                        android:contentDescription="Me siento mal"
+                        android:scaleType="centerInside"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Card tarea activa -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTareaActiva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#E8DEF8"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AHORA MISMO"
+                    android:textSize="11sp"
+                    android:textColor="#6750A4"
+                    android:letterSpacing="0.1"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvTareaActiva"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sin tarea activa"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1B1F"
+                    android:layout_marginBottom="16dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIniciarEnfoque"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="🧠 Iniciar Enfoque"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="#6750A4"
+                    app:cornerRadius="16dp"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Card frase motivacional -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardFrase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💬 Frase del día"
+                    android:textSize="14sp"
+                    android:textColor="#6750A4"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvFrase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cargando frase motivacional..."
+                    android:textSize="15sp"
+                    android:textColor="#49454F"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:textStyle="italic"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Card clima -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardClima"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvClimaIcono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌤️"
+                    android:textSize="36sp"
+                    android:layout_marginEnd="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvClimaTemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cargando clima..."
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1C1B1F"/>
+
+                    <TextView
+                        android:id="@+id/tvClimaSugerencia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Calculando mejor hora de estudio"
+                        android:textSize="13sp"
+                        android:textColor="#49454F"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

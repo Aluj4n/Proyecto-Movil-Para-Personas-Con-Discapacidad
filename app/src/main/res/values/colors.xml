@@ -3,5 +3,11 @@
     <color name="black">#9B3131</color>
     <color name="white">#FFFFFF</color>
     <color name="blue">#3152A6</color>
+    <color name="focus_primary">#E92A22A8</color>
+    <color name="focus_primary_container">#E8DEF8</color>
+    <color name="focus_background">#F6F0FF</color>
+    <color name="focus_surface">#FFFBFE</color>
+    <color name="focus_on_primary">#FFFFFF</color>
+    <color name="focus_secondary">#7FCFCF</color>
 
 </resources>

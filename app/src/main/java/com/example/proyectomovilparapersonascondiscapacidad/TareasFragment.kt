@@ -34,7 +34,7 @@ class TareasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tareas, container, false)
+        return inflater.inflate(R.layout.tareasfragment, container, false)
     }
 
     companion object {

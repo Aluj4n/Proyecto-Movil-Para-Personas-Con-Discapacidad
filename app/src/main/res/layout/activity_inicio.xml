@@ -6,27 +6,37 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F6F0FF"
     tools:context=".Inicio">
-
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/menuOpciones"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@android:color/white"
-        app:title="FocusEco" />
+        android:background="#6750A4"
+        app:titleTextColor="#FFFFFF"
+        app:title="FocusFlow"
+        app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:navigationIcon="@null"
+        app:subtitleTextColor="#E8DEF8"
+        app:subtitle="¡Hola! Enfócate hoy 🧠"/>
 
     <FrameLayout
         android:id="@+id/contenedor"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="#F6F0FF"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/menu_bottom" />
+        android:background="#FFFFFF"
+        app:itemIconTint="#4D41A2"
+        app:itemTextColor="#473199"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom"
+        app:elevation="8dp"/>
 
 </LinearLayout>
