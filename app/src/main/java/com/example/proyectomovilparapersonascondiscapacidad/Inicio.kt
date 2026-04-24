@@ -32,7 +32,7 @@ class Inicio : AppCompatActivity() {
         // Menu opciones
         val toolbar = findViewById<Toolbar>(R.id.menuOpciones)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "FocusEco"
+        supportActionBar?.title = "FocusFlow"
 
 
         //Navigation view

@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
     android:orientation="vertical"
-    android:padding="32dp"
+    android:padding="37dp"
     tools:context=".MainActivity">
-
 
 
     <TextView
@@ -16,16 +15,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="FocusEco"
-        android:textColor="@android:color/white"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginTop="40dp"/>
-
+        android:layout_marginTop="180dp"
+        android:text="FocusFlow"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="38sp"
+        android:textStyle="bold" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="327dp"
+        android:layout_height="388dp"
         android:layout_weight="1" />
 
 
@@ -35,6 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:padding="12dp"
+        android:textColor="@android:color/white"
+
         android:text="Ingresar Con Google" />
 
 </LinearLayout>
