@@ -57,6 +57,12 @@ class Inicio : AppCompatActivity() {
                         .commit()
                     true
                 }
+            R.id.nav_chatbot -> {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.contenedor, ChatBotFragment())
+                .commit()
+            true
+        }
                 else -> false
             }
         }

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4EEFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🤖 FocusBot"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#2B203F"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tu asistente de rutinas sorpresa"
+            android:textSize="15sp"
+            android:textColor="#6B6178"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="26dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:id="@+id/tvMensajeBot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hola 👋\nSoy FocusBot. Hoy puedo prepararte una rutina sorpresa para ayudarte a concentrarte paso a paso."
+                    android:textSize="17sp"
+                    android:textColor="#1C1B1F"
+                    android:background="#E8DEF8"
+                    android:padding="18dp"
+                    android:lineSpacingExtra="6dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cuando estés listo, genera tu QR secreto."
+                    android:textSize="14sp"
+                    android:textColor="#6B6178"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGenerarRutina"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:text="🎁 Generar QR secreto"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="#6750A4"
+                    app:cornerRadius="30dp"
+                    android:layout_marginTop="18dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="22dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🔐 Rutina bloqueada"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#6750A4"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:id="@+id/imgQR"
+                    android:layout_width="310dp"
+                    android:layout_height="310dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:visibility="gone"
+                    android:background="#FFFFFF"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/tvDetalleRutina"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:textColor="#49454F"
+                    android:gravity="center"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📸 Toma captura del QR y desbloquéalo desde Escanear QR."
+            android:textSize="14sp"
+            android:textColor="#6750A4"
+            android:gravity="center"
+            android:layout_marginTop="18dp" />
+
+    </LinearLayout>
+</ScrollView>

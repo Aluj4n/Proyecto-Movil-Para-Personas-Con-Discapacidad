@@ -46,6 +46,8 @@ dependencies {
     //Dependencias Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
     //Dependencias Google
     implementation("com.google.android.gms:play-services-auth:21.4.0")
