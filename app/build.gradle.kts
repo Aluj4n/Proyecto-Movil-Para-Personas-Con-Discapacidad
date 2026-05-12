@@ -48,9 +48,13 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation("com.google.zxing:core:3.5.3")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    //Dependencia firebase para la base de datos
+    implementation(libs.firebase.database)
+
 
     //Dependencias Google
     implementation("com.google.android.gms:play-services-auth:21.4.0")
+    //implementation(libs.firebase.database.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
