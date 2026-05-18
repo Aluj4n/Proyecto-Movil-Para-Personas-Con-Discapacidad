@@ -15,12 +15,6 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
-        <CheckBox
-            android:id="@+id/cbTarea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="#6750A4" />
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -46,6 +40,15 @@
                 android:textColor="#49454F"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnEliminarTarea"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Eliminar tarea"
+            android:src="@drawable/ic_delete"
+            app:tint="#181616" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
