@@ -34,6 +34,13 @@
         android:gravity="center_vertical" />
 
     <Button
+        android:id="@+id/btnSeleccionarUbicacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Seleccionar Ubicación"
+        />
+    <Button
         android:id="@+id/btnGuardarTarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,11 +1,12 @@
 package com.example.proyectomovilparapersonascondiscapacidad
 
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import java.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,17 +15,27 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import android.os.Build
-
-
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-// Solo un import de FirebaseDatabase es necesario
 import com.google.firebase.database.FirebaseDatabase
-
+import java.util.Calendar
 
 class AgregarTarea : BottomSheetDialogFragment() {
 
     private var horaSeleccionada: Long = 0
+    private var latitudSeleccionada: Double = 0.0
+    private var longitudSeleccionada: Double = 0.0
+    private var lugarSeleccionado: String = ""
+
+    // 1. El Launcher DEBE estar aquí como propiedad de la clase, fuera de las funciones
+    private val mapLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            latitudSeleccionada = result.data?.getDoubleExtra("lat", 0.0) ?: 0.0
+            longitudSeleccionada = result.data?.getDoubleExtra("lng", 0.0) ?: 0.0
+            lugarSeleccionado = result.data?.getStringExtra("lugar") ?: "Ubicacion Seleccionada"
+            Toast.makeText(context, "Lugar: $lugarSeleccionado", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,16 +47,17 @@ class AgregarTarea : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Importante: para mostrar el apartado de permisos de notificacion
+        // Permiso de notificaciones para Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
         }
 
         val etNombre = view.findViewById<EditText>(R.id.etNombreTarea)
         val btnGuardar = view.findViewById<Button>(R.id.btnGuardarTarea)
-
         val tvHora = view.findViewById<TextView>(R.id.tvSeleccionarHora)
+        val btnMapa = view.findViewById<Button>(R.id.btnSeleccionarUbicacion)
 
+        // Selector de Hora
         tvHora.setOnClickListener {
             val calendar = Calendar.getInstance()
             TimePickerDialog(context, { _, hour, minute ->
@@ -59,30 +71,42 @@ class AgregarTarea : BottomSheetDialogFragment() {
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
         }
 
+        // Abrir Mapa (MapasActivity seguirá en rojo hasta que crees el archivo)
+        btnMapa.setOnClickListener {
+            val intent = Intent(context, MapasActivity::class.java)
+            mapLauncher.launch(intent)
+        }
 
+        // Botón Guardar
         btnGuardar.setOnClickListener {
             val nombreTarea = etNombre.text.toString().trim()
-
             if (nombreTarea.isNotEmpty()) {
                 guardarEnFirebase(nombreTarea)
             } else {
                 Toast.makeText(context, "Por favor, escribe una tarea", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun guardarEnFirebase(nombre: String) {
         val database = FirebaseDatabase.getInstance().getReference("Tareas")
         val id = database.push().key ?: return
 
-        // Aquí usamos TareaDatos que es el nombre de tu clase modelo
-        val nuevaTarea = TareaDatos(id, nombre, false, horaSeleccionada)
+        // Usamos los 6 parámetros definidos en tu TareaDatos.kt
+        val nuevaTarea = TareaDatos(
+            id = id,
+            nombre = nombre,
+            completada = false,
+            hora = horaSeleccionada,
+            latitud = latitudSeleccionada,
+            longitud = longitudSeleccionada,
+            nombreLugar = lugarSeleccionado
+        )
 
         database.child(id).setValue(nuevaTarea)
             .addOnSuccessListener {
                 if (horaSeleccionada > System.currentTimeMillis()) {
-                    programarNotificacion(nombre, horaSeleccionada)
+                    programarNotificacion(nombre, horaSeleccionada, lugarSeleccionado)
                 }
                 Toast.makeText(context, "Tarea guardada correctamente", Toast.LENGTH_SHORT).show()
                 dismiss()
@@ -92,9 +116,10 @@ class AgregarTarea : BottomSheetDialogFragment() {
             }
     }
 
-    private fun programarNotificacion(nombre: String, tiempo: Long) {
+    private fun programarNotificacion(nombre: String, tiempo: Long, lugar: String) {
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra("NOMBRE_TAREA", nombre)
+            putExtra("LUGAR_TAREA", lugar)
         }
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -107,27 +132,20 @@ class AgregarTarea : BottomSheetDialogFragment() {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         try {
-            // Intentamos programar la alarma exacta
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 if (alarmManager.canScheduleExactAlarms()) {
                     alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, tiempo, pendingIntent)
                 } else {
-                    // Si no tiene permiso en Android 12+, pedimos al usuario que lo active
                     val settingsIntent = Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                     startActivity(settingsIntent)
-                    Toast.makeText(context, "Por favor, permite alarmas exactas para esta app", Toast.LENGTH_LONG).show()
-
-                    // Programamos una normal como respaldo
+                    Toast.makeText(context, "Permite alarmas exactas para notificaciones puntuales", Toast.LENGTH_LONG).show()
                     alarmManager.set(AlarmManager.RTC_WAKEUP, tiempo, pendingIntent)
                 }
             } else {
-                // Versiones anteriores a Android 12 no necesitan validación extra
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, tiempo, pendingIntent)
             }
         } catch (e: SecurityException) {
-            // Si falla por seguridad, usamos la aproximada para que al menos llegue
             alarmManager.set(AlarmManager.RTC_WAKEUP, tiempo, pendingIntent)
-            Toast.makeText(context, "Usando recordatorio aproximado por falta de permisos", Toast.LENGTH_SHORT).show()
         }
     }
 }

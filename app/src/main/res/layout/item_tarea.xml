@@ -21,15 +21,31 @@
             android:layout_height="wrap_content"
             android:buttonTint="#6750A4" />
 
-        <TextView
-            android:id="@+id/tvNombreTarea"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Nombre de la tarea"
-            android:textSize="16sp"
-            android:textColor="#1C1B1F" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNombreTarea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre de la tarea"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#1C1B1F" />
+
+            <TextView
+                android:id="@+id/tvUbicacionTarea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📍 Ubicación"
+                android:textSize="13sp"
+                android:textColor="#49454F"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

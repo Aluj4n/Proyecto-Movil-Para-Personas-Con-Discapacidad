@@ -51,6 +51,10 @@ dependencies {
     //Dependencia firebase para la base de datos
     implementation(libs.firebase.database)
 
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
+
+    implementation("com.google.android.gms:play-services-location:21.1.0")
+
 
     //Dependencias Google
     implementation("com.google.android.gms:play-services-auth:21.4.0")

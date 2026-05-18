@@ -11,8 +11,8 @@ import androidx.core.app.NotificationCompat
 
 class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        Toast.makeText(context, "¡Alarma recibida!", Toast.LENGTH_LONG).show()
         val nombreTarea = intent.getStringExtra("NOMBRE_TAREA") ?: "Tarea pendiente"
+        val lugarTarea = intent.getStringExtra("LUGAR_TAREA") ?: ""
         
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "tareas_channel"
@@ -22,10 +22,12 @@ class NotificationReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
 
+        val contenido = if (lugarTarea.isNotEmpty()) "📍 $lugarTarea" else "Tienes una tarea pendiente"
+
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher) // <--- Cambia a este que es seguro
-            .setContentTitle("Recordatorio")
-            .setContentText(nombreTarea)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("Tarea: $nombreTarea")
+            .setContentText(contenido)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .build()

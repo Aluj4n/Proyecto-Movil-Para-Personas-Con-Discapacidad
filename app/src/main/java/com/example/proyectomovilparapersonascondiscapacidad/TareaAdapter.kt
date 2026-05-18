@@ -13,6 +13,7 @@ class TareaAdapter(private val listaTareas: List<TareaDatos>) :
 
     class TareaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNombre: TextView = view.findViewById(R.id.tvNombreTarea)
+        val tvUbicacion: TextView = view.findViewById(R.id.tvUbicacionTarea)
         val cbTarea: CheckBox = view.findViewById(R.id.cbTarea)
     }
 
@@ -26,6 +27,14 @@ class TareaAdapter(private val listaTareas: List<TareaDatos>) :
         val tarea = listaTareas[position]
         holder.tvNombre.text = tarea.nombre
         holder.cbTarea.isChecked = tarea.completada
+
+        // Mostrar el nombre del lugar si existe
+        if (!tarea.nombreLugar.isNullOrEmpty()) {
+            holder.tvUbicacion.visibility = View.VISIBLE
+            holder.tvUbicacion.text = "📍 ${tarea.nombreLugar}"
+        } else {
+            holder.tvUbicacion.visibility = View.GONE
+        }
 
         // Opcional: Actualizar estado en Firebase al marcar el checkbox
         holder.cbTarea.setOnCheckedChangeListener { _, isChecked ->
