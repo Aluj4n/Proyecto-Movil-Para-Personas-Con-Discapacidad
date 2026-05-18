@@ -21,6 +21,25 @@ class HomeFragment : Fragment() {
 
         //Referenciamos el textview tvfrase de homefragment.xml
         val tvFrase = view.findViewById<TextView>(R.id.tvFrase)
+        //Obtenemos el user de la cuenta de google por firebase
+        val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+        //Referenciamos para poder ver nav_perfil
+        val tvNombre = view.findViewById<TextView>(R.id.tvNombreUsuario)
+        val ivPerfil = view.findViewById<android.widget.ImageView>(R.id.ivPerfil)
+
+        user?.let {
+            // Mostrar nombre (o email si el nombre es nulo)
+            val nombre = it.displayName ?: "Usuario"
+            tvNombre.text = "¡Bienvenido, $nombre! CHOMBA \uD83D\uDD95"
+
+            // Cargar la foto usando Glide
+            it.photoUrl?.let { uri ->
+                com.bumptech.glide.Glide.with(this)
+                    .load(uri)
+                    .circleCrop() // Para que la foto sea redonda
+                    .into(ivPerfil)
+            }
+        }
 
         //Creamos una lista y agregamos frases
         val frases = listOf(

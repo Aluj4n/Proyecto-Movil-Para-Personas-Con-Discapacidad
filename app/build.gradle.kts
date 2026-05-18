@@ -58,7 +58,9 @@ dependencies {
 
     //Dependencias Google
     implementation("com.google.android.gms:play-services-auth:21.4.0")
+    implementation(libs.play.services.maps3d)
     //implementation(libs.firebase.database.ktx)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

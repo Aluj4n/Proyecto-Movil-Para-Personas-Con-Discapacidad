@@ -89,6 +89,8 @@ class AgregarTarea : BottomSheetDialogFragment() {
     }
 
     private fun guardarEnFirebase(nombre: String) {
+        //Obtenemos el id del usuario con la cuenta que ingreso
+        val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
         val database = FirebaseDatabase.getInstance().getReference("Tareas")
         val id = database.push().key ?: return
 
@@ -100,10 +102,11 @@ class AgregarTarea : BottomSheetDialogFragment() {
             hora = horaSeleccionada,
             latitud = latitudSeleccionada,
             longitud = longitudSeleccionada,
-            nombreLugar = lugarSeleccionado
+            nombreLugar = lugarSeleccionado,
+            usuarioid = user?.uid ?: ""
         )
 
-        database.child(id).setValue(nuevaTarea)
+        database.child(user?.uid ?: "anonimo").child(id).setValue(nuevaTarea)
             .addOnSuccessListener {
                 if (horaSeleccionada > System.currentTimeMillis()) {
                     programarNotificacion(nombre, horaSeleccionada, lugarSeleccionado)

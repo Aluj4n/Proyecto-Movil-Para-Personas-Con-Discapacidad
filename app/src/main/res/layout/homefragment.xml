@@ -42,54 +42,32 @@
             android:layout_marginBottom="16dp">
 
             <LinearLayout
+                android:id="@+id/nav_perfil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
 
+                <!-- Foto de Perfil -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivPerfil"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                    android:src="@drawable/ic_launcher_background"
+                    android:layout_marginEnd="16dp"/>
+
+                <!-- Texto de Bienvenida -->
                 <TextView
+                    android:id="@+id/tvNombreUsuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="¿Cómo te sientes hoy?"
+                    android:text="Bienvenido"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="#1C1B1F"
-                    android:layout_marginBottom="16dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <ImageButton
-                        android:id="@+id/moodGreat"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_marginEnd="12dp"
-                        android:background="@drawable/ic_launcher_background"
-                        android:text="😄"
-                        android:contentDescription="Me siento muy bien"
-                        android:scaleType="centerInside"/>
-
-                    <ImageButton
-                        android:id="@+id/moodOk"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_marginEnd="12dp"
-                        android:background="@drawable/ic_launcher_background"
-                        android:contentDescription="Me siento regular"
-                        android:scaleType="centerInside"/>
-
-                    <ImageButton
-                        android:id="@+id/moodBad"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:background="@drawable/ic_launcher_background"
-                        android:contentDescription="Me siento mal"
-                        android:scaleType="centerInside"/>
-
-                </LinearLayout>
+                    android:textColor="#1C1B1F"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

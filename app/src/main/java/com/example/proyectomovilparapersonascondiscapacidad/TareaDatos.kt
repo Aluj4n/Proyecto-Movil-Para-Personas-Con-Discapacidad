@@ -7,7 +7,8 @@ data class TareaDatos(
     val hora: Long = 0,
     val latitud: Double = 0.0,
     val longitud: Double= 0.0,
-    val nombreLugar: String = ""
+    val nombreLugar: String = "",
+    val usuarioid: String = ""
 
 ){
 

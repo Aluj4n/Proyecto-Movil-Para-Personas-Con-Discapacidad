@@ -13,6 +13,7 @@ credentials = "1.6.0"
 googleid = "1.1.1"
 coroutinesPlayServices = "1.10.2"
 firebaseDatabaseKtx = "22.0.1"
+playServicesMaps3d = "0.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,7 @@ kotlinx-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "ko
 
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database" }
+play-services-maps3d = { group = "com.google.android.gms", name = "play-services-maps3d", version.ref = "playServicesMaps3d" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

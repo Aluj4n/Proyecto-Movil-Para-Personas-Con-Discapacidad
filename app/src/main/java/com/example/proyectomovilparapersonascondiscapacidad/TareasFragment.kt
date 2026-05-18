@@ -14,7 +14,6 @@ class TareasFragment : Fragment() {
 
     private lateinit var adapter: TareaAdapter
     private val listaTareas = mutableListOf<TareaDatos>()
-    private val database = FirebaseDatabase.getInstance().getReference("Tareas")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +24,12 @@ class TareasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+        val database = com.google.firebase.database.FirebaseDatabase.getInstance()
+            .getReference("Tareas")
+            .child(user?.uid ?: "anonimo")
+
 
         // 1. Configurar RecyclerView
         val rvTareas = view.findViewById<RecyclerView>(R.id.rvTareas)
@@ -39,12 +44,18 @@ class TareasFragment : Fragment() {
             dialogo.show(parentFragmentManager, "AgregarTareaTag")
         }
 
+
         // 3. Cargar tareas desde Firebase en tiempo real
         cargarTareasDesdeFirebase()
     }
 
     private fun cargarTareasDesdeFirebase() {
-        database.addValueEventListener(object : ValueEventListener {
+        val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+        val dbRef = FirebaseDatabase.getInstance()
+            .getReference("Tareas")
+            .child(user?.uid ?: "anonimo")
+
+        dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 listaTareas.clear()
                 for (postSnapshot in snapshot.children) {
