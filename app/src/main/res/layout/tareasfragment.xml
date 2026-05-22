@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F6F0FF">
+    android:background="@color/focus_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,14 +25,14 @@
                 android:text="Mis Tareas"
                 android:textSize="26sp"
                 android:textStyle="bold"
-                android:textColor="#1C1B1F"/>
+                android:textColor="@color/focus_on_background"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Una a la vez 🎯"
                 android:textSize="13sp"
-                android:textColor="#49454F"/>
+                android:textColor="@color/focus_on_secondary_text"/>
 
         </LinearLayout>
 
@@ -42,7 +42,7 @@
             android:layout_height="48dp"
             android:text="+ Nueva"
             android:textSize="14sp"
-            app:backgroundTint="#6750A4"
+            app:backgroundTint="@color/focus_primary"
             app:cornerRadius="24dp"/>
 
     </LinearLayout>
@@ -56,7 +56,7 @@
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="6dp"
-        app:cardBackgroundColor="#6750A4">
+        app:cardBackgroundColor="@color/focus_secondary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:text="PRÓXIMA TAREA"
                 android:textSize="11sp"
-                android:textColor="#E8DEF8"
+                android:textColor="@color/focus_on_secondary_text"
                 android:letterSpacing="0.1"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
@@ -81,7 +81,7 @@
                 android:text="Agrega tu primera tarea"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/focus_on_background"
                 android:layout_marginBottom="4dp"/>
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="⏱ 25 minutos estimados"
                 android:textSize="13sp"
-                android:textColor="#E8DEF8"
+                android:textColor="@color/focus_on_secondary_text"
                 android:layout_marginBottom="16dp"/>
 
             <com.google.android.material.button.MaterialButton
@@ -101,7 +101,7 @@
                 android:textSize="15sp"
                 app:backgroundTint="#FFFFFF"
                 app:cornerRadius="16dp"
-                android:textColor="#6750A4"/>
+                android:textColor="@color/focus_primary"/>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -112,7 +112,7 @@
         android:text="Pendientes"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#1C1B1F"
+        android:textColor="@color/focus_on_background"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="8dp"/>
 

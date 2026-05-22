@@ -6,19 +6,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F0FF"
+    android:background="@color/focus_background"
     tools:context=".Inicio">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/menuOpciones"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#6750A4"
+        android:background="@color/focus_primary"
         app:titleTextColor="#FFFFFF"
         app:title="FocusFlow"
         app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:navigationIcon="@null"
-        app:subtitleTextColor="#E8DEF8"
+        app:subtitleTextColor="#FFFFFF"
         app:subtitle="¡Hola! Enfócate hoy 🧠"/>
 
     <FrameLayout
@@ -26,15 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#F6F0FF"/>
+        android:background="@color/focus_background"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        app:itemIconTint="#4D41A2"
-        app:itemTextColor="#473199"
+        android:background="@color/focus_surface"
+        app:itemIconTint="@color/focus_primary"
+        app:itemTextColor="@color/focus_primary"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_bottom"
         app:elevation="8dp"/>

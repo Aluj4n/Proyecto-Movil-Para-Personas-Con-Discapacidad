@@ -6,7 +6,7 @@
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="2dp"
-    app:cardBackgroundColor="#FFFFFF">
+    app:cardBackgroundColor="@color/focus_surface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                 android:text="Nombre de la tarea"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#1C1B1F" />
+                android:textColor="@color/focus_on_background" />
 
             <TextView
                 android:id="@+id/tvUbicacionTarea"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="📍 Ubicación"
                 android:textSize="13sp"
-                android:textColor="#49454F"
+                android:textColor="@color/focus_on_secondary_text"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
 
@@ -48,7 +48,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Eliminar tarea"
             android:src="@drawable/ic_delete"
-            app:tint="#181616" />
+            app:tint="@color/focus_tertiary" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

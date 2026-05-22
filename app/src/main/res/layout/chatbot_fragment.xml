@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4EEFF">
+    android:background="@color/focus_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:text="🤖 FocusBot"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="#2B203F"
+            android:textColor="@color/focus_on_background"
             android:gravity="center" />
 
         <TextView
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Tu asistente de rutinas sorpresa"
             android:textSize="15sp"
-            android:textColor="#6B6178"
+            android:textColor="@color/focus_on_secondary_text"
             android:gravity="center"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="24dp" />
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="26dp"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF">
+            app:cardBackgroundColor="@color/focus_surface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,8 +49,8 @@
                     android:layout_height="wrap_content"
                     android:text="Hola 👋\nSoy FocusBot. Hoy puedo prepararte una rutina sorpresa para ayudarte a concentrarte paso a paso."
                     android:textSize="17sp"
-                    android:textColor="#1C1B1F"
-                    android:background="#E8DEF8"
+                    android:textColor="@color/focus_on_background"
+                    android:background="@color/focus_surface"
                     android:padding="18dp"
                     android:lineSpacingExtra="6dp" />
 
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:text="Cuando estés listo, genera tu QR secreto."
                     android:textSize="14sp"
-                    android:textColor="#6B6178"
+                    android:textColor="@color/focus_on_secondary_text"
                     android:gravity="center"
                     android:layout_marginTop="16dp" />
 
@@ -71,7 +71,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    app:backgroundTint="#6750A4"
+                    app:backgroundTint="@color/focus_primary"
                     app:cornerRadius="30dp"
                     android:layout_marginTop="18dp" />
 
@@ -84,7 +84,7 @@
             android:layout_marginTop="24dp"
             app:cardCornerRadius="30dp"
             app:cardElevation="6dp"
-            app:cardBackgroundColor="#FFFFFF">
+            app:cardBackgroundColor="@color/focus_surface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                     android:text="🔐 Rutina bloqueada"
                     android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textColor="#6750A4"
+                    android:textColor="@color/focus_primary"
                     android:gravity="center" />
 
                 <ImageView
@@ -109,7 +109,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="18dp"
                     android:visibility="gone"
-                    android:background="#FFFFFF"
+                    android:background="@color/focus_surface"
                     android:padding="10dp" />
 
                 <TextView
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="15sp"
-                    android:textColor="#49454F"
+                    android:textColor="@color/focus_on_secondary_text"
                     android:gravity="center"
                     android:lineSpacingExtra="6dp"
                     android:layout_marginTop="16dp"
@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:text="📸 Toma captura del QR y desbloquéalo desde Escanear QR."
             android:textSize="14sp"
-            android:textColor="#6750A4"
+            android:textColor="@color/focus_primary"
             android:gravity="center"
             android:layout_marginTop="18dp" />
 

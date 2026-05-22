@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F0FF">
+    android:background="@color/focus_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:text="¡Hola! 👋"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="#1C1B1F"
+            android:textColor="@color/focus_on_background"
             android:layout_marginBottom="4dp"/>
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="Hoy es un buen día para enfocarte"
             android:textSize="14sp"
-            android:textColor="#49454F"
+            android:textColor="@color/focus_on_secondary_text"
             android:layout_marginBottom="20dp"/>
 
         <!-- Card estado de ánimo -->
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/focus_surface"
             android:layout_marginBottom="16dp">
 
             <LinearLayout
@@ -56,7 +56,7 @@
                     android:layout_height="60dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:src="@drawable/ic_launcher_background"
+                    android:src="@drawable/logo"
                     android:layout_marginEnd="16dp"/>
 
                 <!-- Texto de Bienvenida -->
@@ -67,7 +67,7 @@
                     android:text="Bienvenido"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="#1C1B1F"/>
+                    android:textColor="@color/focus_on_background"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="#E8DEF8"
+            app:cardBackgroundColor="@color/focus_secondary"
             android:layout_marginBottom="16dp">
 
             <LinearLayout
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:text="AHORA MISMO"
                     android:textSize="11sp"
-                    android:textColor="#6750A4"
+                    android:textColor="@color/focus_on_secondary_text"
                     android:letterSpacing="0.1"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
@@ -104,7 +104,7 @@
                     android:text="Sin tarea activa"
                     android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textColor="#1C1B1F"
+                    android:textColor="@color/focus_on_background"
                     android:layout_marginBottom="16dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -114,7 +114,7 @@
                     android:text="🧠 Iniciar Enfoque"
                     android:textSize="16sp"
                     android:textColor="#FFFFFF"
-                    app:backgroundTint="#6750A4"
+                    app:backgroundTint="@color/focus_primary"
                     app:cornerRadius="16dp"/>
 
             </LinearLayout>
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/focus_accent"
             android:layout_marginBottom="16dp">
 
             <LinearLayout
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:text="💬 Frase del día"
                     android:textSize="14sp"
-                    android:textColor="#6750A4"
+                    android:textColor="@color/focus_on_background"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
 
@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:text="Cargando frase motivacional..."
                     android:textSize="15sp"
-                    android:textColor="#49454F"
+                    android:textColor="@color/focus_on_secondary_text"
                     android:gravity="center"
                     android:fontFamily="sans-serif-light"
                     android:textStyle="italic"/>
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/focus_surface"
             android:layout_marginBottom="16dp">
 
             <LinearLayout
@@ -197,7 +197,7 @@
                         android:text="Cargando clima..."
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="#1C1B1F"/>
+                        android:textColor="@color/focus_on_background"/>
 
                     <TextView
                         android:id="@+id/tvClimaSugerencia"
@@ -205,7 +205,7 @@
                         android:layout_height="wrap_content"
                         android:text="Calculando mejor hora de estudio"
                         android:textSize="13sp"
-                        android:textColor="#49454F"/>
+                        android:textColor="@color/focus_on_secondary_text"/>
 
                 </LinearLayout>
             </LinearLayout>

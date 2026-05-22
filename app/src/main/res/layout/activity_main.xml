@@ -12,12 +12,12 @@
 
     <TextView
         android:id="@+id/textTitulo"
-        android:layout_width="wrap_content"
+        android:layout_width="193dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="180dp"
         android:text="FocusFlow"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@color/focus_primary"
         android:textSize="38sp"
         android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
         android:layout_margin="20dp"
         android:padding="12dp"
         android:textColor="@android:color/white"
-
+        android:backgroundTint="@color/focus_primary"
         android:text="Ingresar Con Google" />
 
 </LinearLayout>
