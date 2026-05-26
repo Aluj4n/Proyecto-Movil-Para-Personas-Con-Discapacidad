@@ -62,6 +62,9 @@ dependencies {
     //implementation(libs.firebase.database.ktx)
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
+    implementation(libs.google.maps.places)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
