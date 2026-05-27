@@ -27,7 +27,7 @@ class TareaAdapter(private val listaTareas: List<TareaDatos>) :
     override fun onBindViewHolder(holder: TareaViewHolder, position: Int) {
         val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
         val tarea = listaTareas[position]
-        holder.tvNombre.text = tarea.nombre
+        holder.tvNombre.text = tarea.nombreTarea
 
         // Mostrar el nombre del lugar si existe
         if (!tarea.nombreLugar.isNullOrEmpty()) {
@@ -39,9 +39,13 @@ class TareaAdapter(private val listaTareas: List<TareaDatos>) :
 
         // Eliminar tarea de Firebase
         holder.btnEliminar.setOnClickListener {
-            FirebaseDatabase.getInstance().getReference("Tareas")
-                .child(user?.uid ?: "")
-                .removeValue()
+            val emailSanitizado = user?.email?.replace(".", ",") ?: user?.uid ?: ""
+            if (emailSanitizado.isNotEmpty() && !tarea.idTarea.isNullOrEmpty()) {
+                FirebaseDatabase.getInstance().getReference("Tareas")
+                    .child(emailSanitizado)
+                    .child(tarea.idTarea)
+                    .removeValue()
+            }
         }
 
 

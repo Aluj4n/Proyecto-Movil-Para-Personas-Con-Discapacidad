@@ -30,7 +30,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Una a la vez 🎯"
                 android:textSize="13sp"
                 android:textColor="@color/focus_on_secondary_text"/>
 
@@ -58,52 +57,47 @@
         app:cardElevation="6dp"
         app:cardBackgroundColor="@color/focus_secondary">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <!-- Dentro de MaterialCardView en tareasfragment.xml -->
+    <LinearLayout
+        android:id="@+id/cuadroTarea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tvLabelFocus"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:text="TAREA ACTUAL"
+            android:textSize="11sp"
+            android:textColor="@color/focus_on_secondary_text"
+            android:letterSpacing="0.1"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PRÓXIMA TAREA"
-                android:textSize="11sp"
-                android:textColor="@color/focus_on_secondary_text"
-                android:letterSpacing="0.1"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
+        <TextView
+            android:id="@+id/tvFocusNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sin tareas activas"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/focus_on_background"
+            android:layout_marginBottom="4dp"/>
 
-            <TextView
-                android:id="@+id/tvProximaTarea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Agrega tu primera tarea"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/focus_on_background"
-                android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/tvFocusHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textSize="14sp"
+            android:textColor="@color/focus_primary"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tvDuracionTarea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⏱ 25 minutos estimados"
-                android:textSize="13sp"
-                android:textColor="@color/focus_on_secondary_text"
-                android:layout_marginBottom="16dp"/>
+    </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEmpezarTarea"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Empezar ahora"
-                android:textSize="15sp"
-                app:backgroundTint="#FFFFFF"
-                app:cornerRadius="16dp"
-                android:textColor="@color/focus_primary"/>
 
-        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <TextView

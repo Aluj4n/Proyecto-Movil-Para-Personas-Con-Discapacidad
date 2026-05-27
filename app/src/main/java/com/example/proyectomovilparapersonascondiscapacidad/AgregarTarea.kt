@@ -17,8 +17,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.Calendar
+import java.util.Locale
 
 class AgregarTarea : BottomSheetDialogFragment() {
 
@@ -89,40 +93,61 @@ class AgregarTarea : BottomSheetDialogFragment() {
     }
 
     private fun guardarEnFirebase(nombre: String) {
-        //Obtenemos el id del usuario con la cuenta que ingreso
         val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
-        val database = FirebaseDatabase.getInstance().getReference("Tareas")
-        val id = database.push().key ?: return
+        val emailSanitizado = user?.email?.replace(".", ",") ?: user?.uid ?: "anonimo"
+        val database = FirebaseDatabase.getInstance().getReference("Tareas").child(emailSanitizado)
 
-        // Usamos los 6 parámetros definidos en tu TareaDatos.kt
-        val nuevaTarea = TareaDatos(
-            id = id,
-            nombre = nombre,
-            completada = false,
-            hora = horaSeleccionada,
-            latitud = latitudSeleccionada,
-            longitud = longitudSeleccionada,
-            nombreLugar = lugarSeleccionado,
-            usuarioid = user?.uid ?: ""
-        )
-
-        database.child(user?.uid ?: "anonimo").child(id).setValue(nuevaTarea)
-            .addOnSuccessListener {
-                if (horaSeleccionada > System.currentTimeMillis()) {
-                    programarNotificacion(nombre, horaSeleccionada, lugarSeleccionado)
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var maxId = 0
+                for (child in snapshot.children) {
+                    val key = child.key
+                    val numericId = key?.toIntOrNull() ?: 0
+                    if (numericId > maxId) {
+                        maxId = numericId
+                    }
                 }
-                Toast.makeText(context, "Tarea guardada correctamente", Toast.LENGTH_SHORT).show()
-                dismiss()
+
+                val nuevoIdInt = maxId + 1
+                val idFormateado = String.format(Locale.getDefault(), "%05d", nuevoIdInt)
+
+                val nuevaTarea = TareaDatos(
+                    idTarea = idFormateado,
+                    nombreTarea = nombre,
+                    estadoTarea = "PENDIENTE",
+                    horaTarea = horaSeleccionada,
+                    latitud = latitudSeleccionada,
+                    longitud = longitudSeleccionada,
+                    nombreLugar = lugarSeleccionado,
+                    usuarioid = emailSanitizado
+                )
+
+                database.child(idFormateado).setValue(nuevaTarea)
+                    .addOnSuccessListener {
+                        if (horaSeleccionada > System.currentTimeMillis()) {
+                            programarNotificacion(nombre, horaSeleccionada, idFormateado, emailSanitizado)
+                        }
+                        Toast.makeText(context, "Tarea guardada correctamente", Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, "Error al guardar", Toast.LENGTH_SHORT).show()
+                    }
             }
-            .addOnFailureListener {
-                Toast.makeText(context, "Error al guardar", Toast.LENGTH_SHORT).show()
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error al consultar tareas", Toast.LENGTH_SHORT).show()
             }
+        })
     }
 
-    private fun programarNotificacion(nombre: String, tiempo: Long, lugar: String) {
+    private fun programarNotificacion(nombre: String, tiempo: Long, idTarea: String, userKey: String) {
         val intent = Intent(context, NotificationReceiver::class.java).apply {
+            action = "ACCION_INICIAR_TAREA"
+            putExtra("TAREA_ID", idTarea)
+            putExtra("USUARIO_ID", userKey)
             putExtra("NOMBRE_TAREA", nombre)
-            putExtra("LUGAR_TAREA", lugar)
+            putExtra("HORA_PROGRAMADA", tiempo)
         }
 
         val pendingIntent = PendingIntent.getBroadcast(

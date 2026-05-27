@@ -82,6 +82,7 @@
             android:layout_marginBottom="16dp">
 
             <LinearLayout
+                android:id="@+id/cuadroTareaInicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -105,17 +106,18 @@
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/focus_on_background"
-                    android:layout_marginBottom="16dp"/>
+                    android:layout_marginBottom="4dp"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnIniciarEnfoque"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:text="🧠 Iniciar Enfoque"
-                    android:textSize="16sp"
-                    android:textColor="#FFFFFF"
-                    app:backgroundTint="@color/focus_primary"
-                    app:cornerRadius="16dp"/>
+                <TextView
+                    android:id="@+id/tvTareaActivaHora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--"
+                    android:textSize="14sp"
+                    android:textColor="@color/focus_primary"
+                    android:textStyle="bold"/>
+
+
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
