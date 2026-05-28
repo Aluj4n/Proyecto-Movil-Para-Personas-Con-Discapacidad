@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/focus_background">
+    android:background="@drawable/image_chatbot">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:text="📸 Toma captura del QR y desbloquéalo desde Escanear QR."
             android:textSize="14sp"
-            android:textColor="@color/focus_primary"
+            android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginTop="18dp" />
 

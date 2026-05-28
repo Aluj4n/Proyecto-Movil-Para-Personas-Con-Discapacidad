@@ -1,40 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo"
+    android:background="@drawable/image_chatbot"
     android:orientation="vertical"
     android:padding="37dp"
     tools:context=".MainActivity">
 
-
-    <TextView
-        android:id="@+id/textTitulo"
-        android:layout_width="193dp"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_weight="1"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:layout_marginTop="180dp"
-        android:text="FocusFlow"
-        android:textColor="@color/focus_primary"
-        android:textSize="38sp"
-        android:textStyle="bold" />
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="327dp"
-        android:layout_height="388dp"
-        android:layout_weight="1" />
+        <TextView
+            android:id="@+id/textTituloFocus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="FOCUS"
+            android:textColor="@color/focus_primary"
+            android:textSize="80dp"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/textTituloFlow"
+            android:layout_width="wrap_content"
+            android:layout_height="78dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-8dp"
+            android:text="flow"
+            android:textColor="@color/focus_primary"
+            android:textSize="50dp"
+            android:textStyle="normal" />
 
-    <Button
+        <TextView
+            android:id="@+id/textEslogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="Un paso a la vez. 🧠"
+            android:textColor="#49454F"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnIngresar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:padding="12dp"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/focus_primary"
-        android:text="Ingresar Con Google" />
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:padding="16dp"
+        android:backgroundTint="@android:color/white"
+        android:text="Ingresar Con Google"
+        android:textColor="@color/focus_primary"
+        app:cornerRadius="30dp"
+        app:strokeColor="#DDDDDD"
+        app:strokeWidth="1dp" />
 
 </LinearLayout>

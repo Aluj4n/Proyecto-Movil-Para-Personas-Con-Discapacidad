@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/focus_background">
+    android:background="@drawable/imagen_front">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,7 +55,7 @@
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="6dp"
-        app:cardBackgroundColor="@color/focus_secondary">
+        app:cardBackgroundColor="#89DDE6">
 
     <!-- Dentro de MaterialCardView en tareasfragment.xml -->
     <LinearLayout

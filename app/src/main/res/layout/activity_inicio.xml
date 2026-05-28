@@ -13,13 +13,36 @@
         android:id="@+id/menuOpciones"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/focus_primary"
-        app:titleTextColor="#FFFFFF"
-        app:title="FocusFlow"
-        app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:background="@drawable/barra_arriba"
         app:navigationIcon="@null"
-        app:subtitleTextColor="#FFFFFF"
-        app:subtitle="¡Hola! Enfócate hoy 🧠"/>
+        app:contentInsetStart="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FocusFlow"
+                android:textColor="#1C1B1F"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¡Hola! Enfócate hoy 🧠"
+                android:textColor="#1C1B1F"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <FrameLayout
         android:id="@+id/contenedor"
@@ -32,11 +55,11 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/focus_surface"
+        android:background="@drawable/barra_abajo"
+        app:elevation="8dp"
         app:itemIconTint="@color/focus_primary"
-        app:itemTextColor="@color/focus_primary"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_bottom"
-        app:elevation="8dp"/>
+        app:menu="@menu/menu_bottom" />
+
 
 </LinearLayout>
