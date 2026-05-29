@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
 
         user?.let {
             val nombre = it.displayName ?: "Usuario"
-            tvNombre.text = "¡Bienvenido, $nombre! CHOMBA \uD83D\uDD95"
+            tvNombre.text = "¡Bienvenido, $nombre!"
 
             it.photoUrl?.let { uri ->
                 com.bumptech.glide.Glide.with(this)

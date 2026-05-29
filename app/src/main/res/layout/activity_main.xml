@@ -36,7 +36,7 @@
             android:layout_height="78dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="-8dp"
-            android:text="flow"
+            android:text="Flow"
             android:textColor="@color/focus_primary"
             android:textSize="50dp"
             android:textStyle="normal" />
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="Un paso a la vez. 🧠"
+            android:text="Un paso a la vez."
             android:textColor="#49454F"
             android:textSize="16sp" />
     </LinearLayout>
