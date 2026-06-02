@@ -2,4 +2,27 @@
     <string name="app_name">Proyecto Movil Para Personas Con Discapacidad</string>
     <string name="default_web_client_id">521830315861-gl4h8jrc2up060clt2kpbkk8bcpgtm9l.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Rutinas UI -->
+    <string name="rutina_personalizada">Rutina Personalizada</string>
+    <string name="btn_volver">← Volver</string>
+    <string name="instruccion_mood">¿Cómo te sientes en este momento?</string>
+    <string name="mood_alegre">Alegre</string>
+    <string name="mood_triste">Triste</string>
+    <string name="mood_molesto">Molesto</string>
+    <string name="instruccion_meta">Elige una meta pequeña para ahora:</string>
+    <string name="titulo_pasos">Pasos a seguir:</string>
+    <string name="btn_realizar_ahora">⭐ Realizar esta rutina ahora</string>
+    <string name="btn_escuchar_pasos">Escuchar pasos 🔊</string>
+    <string name="recordatorio_ritmo">Recuerda avanzar a tu propio ritmo.</string>
+
+    <!-- Mensajes de Apoyo -->
+    <string name="msg_alegre">¡Aprovecha esa chispa! ¿Qué quieres conquistar? 🚀</string>
+    <string name="msg_triste">Está bien ir despacio. Hagamos algo muy fácil ☁️</string>
+    <string name="msg_molesto">Vamos a transformar esa tensión en calma 🌋</string>
+
+    <!-- Toasts -->
+    <string name="toast_rutina_activada">¡Rutina activada! Búscala en tu lista de tareas.</string>
+    <string name="toast_error_activar">Error al activar rutina</string>
+    <string name="toast_error_conexion">Error de conexión</string>
 </resources>

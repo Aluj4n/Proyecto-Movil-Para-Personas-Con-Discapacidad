@@ -2,9 +2,18 @@ package com.example.proyectomovilparapersonascondiscapacidad
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.card.MaterialCardView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.Locale
 
 class RutinaDetalleActivity : AppCompatActivity() {
@@ -16,103 +25,176 @@ class RutinaDetalleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rutina_detalle)
 
+        // Views principales
         val tvTitulo = findViewById<TextView>(R.id.tvTituloRutina)
-        val tvEspecialista = findViewById<TextView>(R.id.tvEspecialistaRutina)
-        val tvPasos = findViewById<TextView>(R.id.tvPasosRutina)
         val btnComenzar = findViewById<Button>(R.id.btnComenzarRutina)
+        val tvInstruccion = findViewById<TextView>(R.id.tvInstruccion)
+        
+        // Contenedores
+        val layoutMoods = findViewById<LinearLayout>(R.id.layoutMoods)
+        val layoutOptions = findViewById<LinearLayout>(R.id.layoutOptions)
+        val cardRutina = findViewById<MaterialCardView>(R.id.cardRutina)
+
+        // Botones de Mood
+        val btnAlegre = findViewById<LinearLayout>(R.id.btnAlegre)
+        val btnTriste = findViewById<LinearLayout>(R.id.btnTriste)
+        val btnMolesto = findViewById<LinearLayout>(R.id.btnMolesto)
+        val btnRegresar = findViewById<Button>(R.id.btnRegresar)
+        val btnAsignarTarea = findViewById<Button>(R.id.btnAsignarTarea)
+
+        // Vistas de Opciones
+        val tvMensajeMood = findViewById<TextView>(R.id.tvMensajeMood)
+        val btnOpcion1 = findViewById<Button>(R.id.btnOpcion1)
+        val btnOpcion2 = findViewById<Button>(R.id.btnOpcion2)
+        val btnOpcion3 = findViewById<Button>(R.id.btnOpcion3)
 
         tts = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
                 tts.language = Locale("es", "MX")
-
-                // BAJAR LA VELOCIDAD: 0.7f o 0.8f es ideal para que sea entendible
-                tts.setSpeechRate(0.8f)
-
-                // También puedes bajar el tono (pitch) para que la voz sea más grave y tranquila
-                tts.setPitch(1.0f)
+                tts.setSpeechRate(0.85f)
             }
         }
 
-        val codigo = intent.getStringExtra("codigoRutina")?.trim()
+        // Lógica al elegir Emoji
+        btnAlegre.setOnClickListener {
+            mostrarPasosSeleccion("alegre", tvMensajeMood, btnOpcion1, btnOpcion2, btnOpcion3, layoutMoods, layoutOptions, tvInstruccion)
+        }
+        btnTriste.setOnClickListener {
+            mostrarPasosSeleccion("triste", tvMensajeMood, btnOpcion1, btnOpcion2, btnOpcion3, layoutMoods, layoutOptions, tvInstruccion)
+        }
+        btnMolesto.setOnClickListener {
+            mostrarPasosSeleccion("molesto", tvMensajeMood, btnOpcion1, btnOpcion2, btnOpcion3, layoutMoods, layoutOptions, tvInstruccion)
+        }
 
-        textoRutina = when (codigo) {
-            "FOCUS_01" -> {
-                tvTitulo.text = "🎁 Rutina de Inicio Fácil"
-                tvEspecialista.text = "Especialista virtual: Dra. Luna"
+        btnRegresar.setOnClickListener {
+            if (::tts.isInitialized) tts.stop()
 
-                "🌬️ 1. Respira profundo 5 veces para calmarte.\n\n" +
-                        "🧹 2. Quita de tu mesa lo que no vayas a usar.\n\n" +
-                        "💧 3. Toma un poco de agua para despertar.\n\n" +
-                        "🏃 4. Sacude tus manos y hombros 5 segundos.\n\n" +
-                        "🎯 5. Elige la tarea más pequeña que tengas.\n\n" +
-                        "✍️ 6. Escribe en un papel solo el primer paso.\n\n" +
-                        "⏱️ 7. Trabaja en eso por solo 10 minutos.\n\n" +
-                        "✅ 8. ¡Genial! Ya rompiste la inercia."
-            }
-
-            "FOCUS_02" -> {
-                tvTitulo.text = "🎯 Rutina Anti-Distracción"
-                tvEspecialista.text = "Especialista virtual: Dr. Leo"
-
-                "📵 1. Pon el celular boca abajo o lejos de ti.\n\n" +
-                        "🎧 2. Ponte audífonos para avisar que estás ocupado.\n\n" +
-                        "🧠 3. Di en voz alta: 'Ahora voy a trabajar en esto'.\n\n" +
-                        "✂️ 4. Divide tu tarea en 3 partes muy cortas.\n\n" +
-                        "⏱️ 5. Pon un cronómetro de 15 minutos.\n\n" +
-                        "📝 6. Si algo te distrae, anótalo y sigue.\n\n" +
-                        "🌿 7. Si te pierdes, respira y vuelve a empezar.\n\n" +
-                        "🔁 8. Sigue un poco más, lo estás haciendo bien."
-            }
-
-            "FOCUS_03" -> {
-                tvTitulo.text = "🌞 Rutina de Calma y Orden"
-                tvEspecialista.text = "Especialista virtual: Dra. Sol"
-
-                "💧 1. Toma un sorbo de agua despacio.\n\n" +
-                        "🌬️ 2. Haz 3 respiraciones lentas por la nariz.\n\n" +
-                        "📋 3. Escribe tus 3 pendientes más importantes.\n\n" +
-                        "⭐ 4. Elige el que te parezca más divertido o fácil.\n\n" +
-                        "🪑 5. Ajusta tu silla para estar muy cómodo.\n\n" +
-                        "🚀 6. Empieza la tarea sin pensar en el final.\n\n" +
-                        "⏱️ 7. Mantente enfocado solo 10 minutos.\n\n" +
-                        "👏 8. Reconoce tu esfuerzo, cada minuto cuenta."
-            }
-
-            "FOCUS_04" -> {
-                tvTitulo.text = "⏱️ Pomodoro TDAH Dinámico"
-                tvEspecialista.text = "Especialista virtual: Dr. Mateo"
-
-                "📚 1. Ten a la mano solo lo necesario para trabajar.\n\n" +
-                        "🎯 2. Decide exactamente qué vas a terminar hoy.\n\n" +
-                        "⏱️ 3. Trabaja concentrado por 12 minutos.\n\n" +
-                        "☕ 4. Cuando suene la alarma, detente de inmediato.\n\n" +
-                        "🚶 5. Camina un poco o estírate por 3 minutos.\n\n" +
-                        "🔁 6. Regresa y haz otro bloque de 12 minutos.\n\n" +
-                        "🧠 7. Nota qué tanto avanzaste en este tiempo.\n\n" +
-                        "✅ 8. ¡Misión cumplida! Tómate un descanso real."
-            }
-
-            else -> {
-                tvTitulo.text = "Rutina no encontrada"
-                tvEspecialista.text = "QR no reconocido"
-                "❌ Intenta escanear el código nuevamente."
+            if (cardRutina.visibility == View.VISIBLE) {
+                // De rutina a opciones
+                cardRutina.visibility = View.GONE
+                findViewById<View>(R.id.btnComenzarRutina).visibility = View.GONE
+                layoutOptions.visibility = View.VISIBLE
+                tvInstruccion.text = getString(R.string.instruccion_meta)
+            } else if (layoutOptions.visibility == View.VISIBLE) {
+                // De opciones a mood
+                layoutOptions.visibility = View.GONE
+                btnRegresar.visibility = View.GONE
+                layoutMoods.visibility = View.VISIBLE
+                tvInstruccion.text = getString(R.string.instruccion_mood)
             }
         }
 
-        tvPasos.text = textoRutina
+        btnAsignarTarea.setOnClickListener {
+            val titulo = tvTitulo.text.toString()
+            if (titulo.isNotEmpty()) {
+                asignarRutinaComoTarea(titulo)
+            }
+        }
 
         btnComenzar.setOnClickListener {
-            val regexEmojis = Regex("[\\p{So}\\p{Cn}]")
-
-            // Limpiamos el texto para que el TTS sea breve
-            val textoParaVoz = textoRutina
-                .replace(regexEmojis, "")
-                .replace("\n", ". ")
-                .replace("minutos", "min") // El TTS suele leer "min" más rápido
-                .trim()
-
-            tts.speak(textoParaVoz, TextToSpeech.QUEUE_FLUSH, null, "rutina_tda")
+            if (textoRutina.isNotEmpty()) {
+                val regexEmojis = Regex("[\\p{So}\\p{Cn}]")
+                val textoParaVoz = textoRutina.replace(regexEmojis, "").replace("\n", ". ").trim()
+                tts.speak(textoParaVoz, TextToSpeech.QUEUE_FLUSH, null, "rutina_voz")
+            }
         }
+    }
+
+    private fun mostrarPasosSeleccion(
+        mood: String,
+        tvMsg: TextView,
+        b1: Button, b2: Button, b3: Button,
+        lMoods: View, lOpts: View, tvInst: TextView
+    ) {
+        lMoods.visibility = View.GONE
+        lOpts.visibility = View.VISIBLE
+        findViewById<Button>(R.id.btnRegresar).visibility = View.VISIBLE
+        tvInst.text = getString(R.string.instruccion_meta)
+
+        val tvTitulo = findViewById<TextView>(R.id.tvTituloRutina)
+        val tvPasos = findViewById<TextView>(R.id.tvPasosRutina)
+        val card = findViewById<MaterialCardView>(R.id.cardRutina)
+        val btnEscuchar = findViewById<Button>(R.id.btnComenzarRutina)
+
+        when (mood) {
+            "alegre" -> {
+                tvMsg.text = getString(R.string.msg_alegre)
+                configurarBotonTarea(b1, "Estudio Flash", "Abre tu libro o apunte en la página que te toca leer.\n\n Lee solamente un párrafo o resuelve un ejercicio.\n\n Celébralo con un baile!", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+                configurarBotonTarea(b2, "Avance de Tarea", "Escribe el título de tu tarea y tu nombre en una hoja nueva.\n\n Contesta solo la primera pregunta sin pensar demasiado..\n\n Marca esa pequeña victoria y decide si quieres seguir.", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+                configurarBotonTarea(b3, "Partida de Celebración", "Abre tu juego favorito.\n\n Juega una sola partida rápida para aprovechar tu buena energía.\n\n Cierra el juego al terminar y estírate un poco.", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+
+            }
+            "triste" -> {
+                tvMsg.text = getString(R.string.msg_triste)
+                configurarBotonTarea(b1, "Mira Una Pelicula", "Ponte tu ropa más cómoda o tu pijama favorito.\n\n Pon una película que disfrutes mucho.\n\n Descansa en tu cama sin sentir nada de culpa.", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+                configurarBotonTarea(b2, "🧸 Micro-Orden", "🧹 1. Recoge solo 3 objetos.\n\n🧹 2. Limpia un pedacito de tu mesa.\n\n🧹 3. ¡Excelente avance!", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+                configurarBotonTarea(b3, "Escucha tu musica favorita", " Lávate la cara.\n\n Ponte ropa cómoda.\n\n Escucha tu canciónciones favoritas.", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+            }
+            "molesto" -> {
+                tvMsg.text = getString(R.string.msg_molesto)
+                configurarBotonTarea(b1, "💪 Descarga Segura", "🥊 1. Aprieta tus manos fuerte 5 segundos.\n\n🥊 2. Suelta el aire con ruido.\n\n🥊 3. Repite 3 veces.", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+                configurarBotonTarea(b2, "🧊 Enfoque Sensorial", "❄️ 1. Busca algo muy frío.\n\n❄️ 2. Tócalo por 10 segundos.\n\n❄️ 3. Nota cómo baja el calor de tu cuerpo.", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+                configurarBotonTarea(b3, "🔎 Juego de Rastreo", "👁️ 1. Busca 5 cosas verdes.\n\n👁️ 2. Busca 4 cosas cuadradas.\n\n👁️ 3. Respira y nota el cambio.", tvTitulo, tvPasos, card, lOpts, btnEscuchar)
+            }
+        }
+    }
+
+    private fun configurarBotonTarea(btn: Button, titulo: String, pasos: String, tvT: TextView, tvP: TextView, card: View, lOpts: View, btnE: View) {
+        btn.text = titulo
+        btn.setOnClickListener {
+            tvT.text = titulo
+            tvP.text = pasos
+            textoRutina = pasos
+            lOpts.visibility = View.GONE
+            card.visibility = View.VISIBLE
+            btnE.visibility = View.VISIBLE
+        }
+    }
+
+    private fun asignarRutinaComoTarea(nombre: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val emailSanitizado = user?.email?.replace(".", ",") ?: user?.uid ?: "anonimo"
+        val database = FirebaseDatabase.getInstance().getReference("Tareas").child(emailSanitizado)
+
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var maxId = 0
+                for (child in snapshot.children) {
+                    val key = child.key
+                    val numericId = key?.toIntOrNull() ?: 0
+                    if (numericId > maxId) {
+                        maxId = numericId
+                    }
+                }
+
+                val nuevoIdInt = maxId + 1
+                val idFormateado = String.format(Locale.getDefault(), "%05d", nuevoIdInt)
+
+                val nuevaTarea = TareaDatos(
+                    idTarea = idFormateado,
+                    nombreTarea = nombre,
+                    estadoTarea = "ACTIVA", // Se asigna como ACTIVA directamente
+                    horaTarea = System.currentTimeMillis(),
+                    latitud = 0.0,
+                    longitud = 0.0,
+                    nombreLugar = "Rutina Personalizada",
+                    usuarioid = emailSanitizado
+                )
+
+                database.child(idFormateado).setValue(nuevaTarea)
+                    .addOnSuccessListener {
+                        Toast.makeText(this@RutinaDetalleActivity, getString(R.string.toast_rutina_activada), Toast.LENGTH_LONG).show()
+                        finish() // Opcional: Cerrar la actividad al asignar
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this@RutinaDetalleActivity, getString(R.string.toast_error_activar), Toast.LENGTH_SHORT).show()
+                    }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@RutinaDetalleActivity, getString(R.string.toast_error_conexion), Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onDestroy() {

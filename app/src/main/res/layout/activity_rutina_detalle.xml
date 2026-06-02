@@ -14,25 +14,176 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🎁 Rutina desbloqueada"
+            android:text="@string/rutina_personalizada"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="@color/focus_on_background"
             android:gravity="center"
             android:layout_marginBottom="6dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegresar"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_volver"
+            android:visibility="gone"
+            android:textColor="@color/focus_primary"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
         <TextView
+            android:id="@+id/tvInstruccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sigue los pasos con calma, uno por uno."
-            android:textSize="15sp"
-            android:textColor="@color/focus_on_secondary_text"
+            android:text="@string/instruccion_mood"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/focus_on_background"
             android:gravity="center"
             android:layout_marginBottom="22dp" />
 
-        <com.google.android.material.card.MaterialCardView
+        <!-- PASO 1: Selector de Estados de Ánimo -->
+        <LinearLayout
+            android:id="@+id/layoutMoods"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
+
+            <LinearLayout
+                android:id="@+id/btnAlegre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="😊"
+                    android:textSize="45sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mood_alegre"
+                    android:textStyle="bold"
+                    android:textColor="@color/focus_on_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnTriste"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="😢"
+                    android:textSize="45sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mood_triste"
+                    android:textStyle="bold"
+                    android:textColor="@color/focus_on_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnMolesto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="😡"
+                    android:textSize="45sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mood_molesto"
+                    android:textStyle="bold"
+                    android:textColor="@color/focus_on_background"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- PASO 2: Opciones de Tareas (Se muestra al elegir un emoji) -->
+        <LinearLayout
+            android:id="@+id/layoutOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:id="@+id/tvMensajeMood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mensaje de apoyo"
+                android:textSize="17sp"
+                android:textStyle="italic"
+                android:textColor="@color/focus_on_background"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:padding="15dp"
+                android:background="#1A000000" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOpcion1"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Tarea 1"
+                android:textAllCaps="false"
+                app:strokeColor="@color/focus_primary"
+                app:cornerRadius="15dp"
+                android:layout_marginBottom="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOpcion2"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Tarea 2"
+                android:textAllCaps="false"
+                app:strokeColor="@color/focus_primary"
+                app:cornerRadius="15dp"
+                android:layout_marginBottom="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOpcion3"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Tarea 3"
+                android:textAllCaps="false"
+                app:strokeColor="@color/focus_primary"
+                app:cornerRadius="15dp"
+                android:layout_marginBottom="10dp"/>
+        </LinearLayout>
+
+        <!-- PASO 3: Detalle de la Rutina (Se muestra al elegir una tarea) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardRutina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             app:cardCornerRadius="26dp"
             app:cardElevation="6dp"
             app:cardBackgroundColor="@color/focus_surface">
@@ -47,59 +198,40 @@
                     android:id="@+id/tvTituloRutina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Rutina"
-                    android:textSize="24sp"
+                    android:text="Título de la Tarea"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/focus_primary"
                     android:gravity="center" />
 
                 <TextView
-                    android:id="@+id/tvEspecialistaRutina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Especialista"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/focus_on_secondary_text"
-                    android:gravity="center"
-                    android:layout_marginTop="10dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="🧠 Objetivo"
+                    android:text="@string/titulo_pasos"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/focus_on_background"
-                    android:layout_marginTop="24dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ayudarte a concentrarte mejor y completar una actividad corta sin presión."
-                    android:textSize="15sp"
-                    android:textColor="@color/focus_on_secondary_text"
-                    android:layout_marginTop="6dp"
-                    android:lineSpacingExtra="4dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="✅ Pasos de la rutina"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/focus_on_background"
-                    android:layout_marginTop="24dp" />
+                    android:layout_marginTop="20dp" />
 
                 <TextView
                     android:id="@+id/tvPasosRutina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pasos"
+                    android:text="Pasos detallados..."
                     android:textSize="18sp"
                     android:textColor="@color/focus_on_background"
                     android:lineSpacingExtra="10dp"
                     android:layout_marginTop="10dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAsignarTarea"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_realizar_ahora"
+                    android:textColor="@color/focus_primary"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -108,7 +240,8 @@
             android:id="@+id/btnComenzarRutina"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="🚀 Comenzar rutina"
+            android:text="@string/btn_escuchar_pasos"
+            android:visibility="gone"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
@@ -119,11 +252,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recuerda: no tienes que hacerlo perfecto, solo avanzar un paso..."
+            android:text="@string/recordatorio_ritmo"
             android:textSize="14sp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="24dp" />
 
     </LinearLayout>
 </ScrollView>
