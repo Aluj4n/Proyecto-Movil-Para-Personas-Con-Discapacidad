@@ -30,6 +30,10 @@ class MapasActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    // Variables para guardar la selección actual
+    private var lastSelectedLatLng: LatLng? = null
+    private var lastSelectedName: String = "Ubicación seleccionada"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mapas)
@@ -62,6 +66,10 @@ class MapasActivity : AppCompatActivity(), OnMapReadyCallback {
                     mMap.clear()
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16f))
                     mMap.addMarker(MarkerOptions().position(latLng).title(place.name))
+
+                    // Guardar selección
+                    lastSelectedLatLng = latLng
+                    lastSelectedName = place.name ?: "Lugar seleccionado"
                 }
             }
 
@@ -81,6 +89,21 @@ class MapasActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        // Configurar el botón de confirmación
+        val btnConfirmar = findViewById<com.google.android.material.button.MaterialButton>(R.id.btnConfirmarUbicacion)
+        btnConfirmar.setOnClickListener {
+            if (lastSelectedLatLng != null) {
+                val resultIntent = Intent()
+                resultIntent.putExtra("lat", lastSelectedLatLng!!.latitude)
+                resultIntent.putExtra("lng", lastSelectedLatLng!!.longitude)
+                resultIntent.putExtra("lugar", lastSelectedName)
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            } else {
+                Toast.makeText(this, "Por favor, selecciona un punto en el mapa", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -108,12 +131,9 @@ class MapasActivity : AppCompatActivity(), OnMapReadyCallback {
 
             mMap.addMarker(MarkerOptions().position(latLng).title(nombreLugar))
 
-            val resultIntent = Intent()
-            resultIntent.putExtra("lat", latLng.latitude)
-            resultIntent.putExtra("lng", latLng.longitude)
-            resultIntent.putExtra("lugar", nombreLugar)
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
+            // Guardar para confirmar después
+            lastSelectedLatLng = latLng
+            lastSelectedName = nombreLugar
         }
     }
 

@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 class NotificationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        val pendingResult = goAsync()
         val tareaId = intent.getStringExtra("TAREA_ID") ?: return
         val usuarioId = intent.getStringExtra("USUARIO_ID") ?: return
         val nombreTarea = intent.getStringExtra("NOMBRE_TAREA") ?: "Tarea"
@@ -23,28 +24,86 @@ class NotificationReceiver : BroadcastReceiver() {
 
         val database = FirebaseDatabase.getInstance().getReference("Tareas").child(usuarioId).child(tareaId)
 
-        when (accion) {
-            "ACCION_INICIAR_TAREA" -> {
-                // 1. Cambiar estado a ACTIVA
-                database.child("estadoTarea").setValue("ACTIVA")
-
-                // 2. Notificar inicio
-                mostrarNotificacionSimple(context, "Tarea iniciada", "$nombreTarea")
-
-                // 3. Programar la pregunta exactamente 1 hora después de la hora de inicio (horaProgramada + 3600000)
-                val tiempoPregunta = horaProgramada + 3600000 // 1 hora después de la hora programada
-                programarPreguntaParaDespues(context, tareaId, usuarioId, nombreTarea, tiempoPregunta)
+        database.get().addOnSuccessListener { snapshot ->
+            if (!snapshot.exists() && accion != "ACCION_MARCAR_COMPLETADA" && accion != "ACCION_POSPONER_TAREA") {
+                pendingResult.finish()
+                return@addOnSuccessListener
             }
 
-            "ACCION_PREGUNTAR_CULMINACION" -> {
-                mostrarNotificacionConBotones(context, tareaId, usuarioId, nombreTarea)
-            }
+            val estadoActual = snapshot.child("estadoTarea").value as? String
 
-            "ACCION_MARCAR_COMPLETADA" -> {
-                database.child("estadoTarea").setValue("COMPLETADA")
-                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notificationManager.cancel(tareaId.hashCode())
+            when (accion) {
+                "ACCION_INICIAR_TAREA" -> {
+                    // Solo iniciar si la tarea sigue PENDIENTE
+                    if (estadoActual == "PENDIENTE") {
+                        database.child("estadoTarea").setValue("ACTIVA")
+                        mostrarNotificacionSimple(context, "Tarea iniciada", nombreTarea)
+                        
+                        val tiempoPregunta = horaProgramada + 3600000 
+                        programarPreguntaParaDespues(context, tareaId, usuarioId, nombreTarea, tiempoPregunta)
+                    }
+                }
+
+                "ACCION_PREGUNTAR_CULMINACION" -> {
+                    // Solo preguntar si la tarea sigue ACTIVA
+                    if (estadoActual == "ACTIVA") {
+                        mostrarNotificacionConBotones(context, tareaId, usuarioId, nombreTarea, horaProgramada)
+                    }
+                }
+
+                "ACCION_MARCAR_COMPLETADA" -> {
+                    database.removeValue()
+                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notificationManager.cancel(tareaId.hashCode())
+                }
+
+                "ACCION_POSPONER_TAREA" -> {
+                    val unDiaEnMillis = 24 * 60 * 60 * 1000L
+                    val nuevaHora = horaProgramada + unDiaEnMillis
+
+                    val updates = hashMapOf<String, Any>(
+                        "horaTarea" to nuevaHora,
+                        "estadoTarea" to "PENDIENTE"
+                    )
+                    database.updateChildren(updates).addOnSuccessListener {
+                        reprogramarParaManana(context, tareaId, usuarioId, nombreTarea, nuevaHora)
+                    }
+
+                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notificationManager.cancel(tareaId.hashCode())
+                }
             }
+            pendingResult.finish()
+        }.addOnFailureListener {
+            pendingResult.finish()
+        }
+    }
+
+    private fun reprogramarParaManana(context: Context, tId: String, uId: String, nombre: String, tiempo: Long) {
+        val intent = Intent(context, NotificationReceiver::class.java).apply {
+            action = "ACCION_INICIAR_TAREA"
+            putExtra("TAREA_ID", tId)
+            putExtra("USUARIO_ID", uId)
+            putExtra("NOMBRE_TAREA", nombre)
+            putExtra("HORA_PROGRAMADA", tiempo)
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            tId.hashCode(), // Usar hashCode del ID para que sea consistente
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (alarmManager.canScheduleExactAlarms()) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, tiempo, pendingIntent)
+            } else {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, tiempo, pendingIntent)
+            }
+        } else {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, tiempo, pendingIntent)
         }
     }
 
@@ -68,7 +127,7 @@ class NotificationReceiver : BroadcastReceiver() {
         notificationManager.notify(System.currentTimeMillis().toInt(), notification)
     }
 
-    private fun mostrarNotificacionConBotones(context: Context, tId: String, uId: String, nombre: String) {
+    private fun mostrarNotificacionConBotones(context: Context, tId: String, uId: String, nombre: String, horaOrig: Long) {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "tareas_preguntas"
 
@@ -77,6 +136,7 @@ class NotificationReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
 
+        // Intent para SÍ, COMPLETADA
         val intentSi = Intent(context, NotificationReceiver::class.java).apply {
             action = "ACCION_MARCAR_COMPLETADA"
             putExtra("TAREA_ID", tId)
@@ -89,13 +149,27 @@ class NotificationReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+        // Intent para NO COMPLETADA (Posponer)
+        val intentNo = Intent(context, NotificationReceiver::class.java).apply {
+            action = "ACCION_POSPONER_TAREA"
+            putExtra("TAREA_ID", tId)
+            putExtra("USUARIO_ID", uId)
+            putExtra("HORA_PROGRAMADA", horaOrig)
+        }
+        val pendingNo = PendingIntent.getBroadcast(
+            context,
+            (tId + "no").hashCode(),
+            intentNo,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("¿Terminaste tu tarea?")
-            .setContentText("¿Has culminado la actividad: $nombre?")
+            .setContentTitle(context.getString(R.string.notif_titulo_pregunta))
+            .setContentText(context.getString(R.string.notif_cuerpo_pregunta, nombre))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .addAction(R.drawable.ic_launcher_foreground, "SÍ, COMPLETADA", pendingSi)
-            .addAction(R.drawable.ic_launcher_foreground, "NO COMPLETADA", null)
+            .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.notif_accion_si), pendingSi)
+            .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.notif_accion_no), pendingNo)
             .setAutoCancel(true)
             .build()
 
@@ -109,6 +183,7 @@ class NotificationReceiver : BroadcastReceiver() {
             putExtra("TAREA_ID", tId)
             putExtra("USUARIO_ID", uId)
             putExtra("NOMBRE_TAREA", nombre)
+            putExtra("HORA_PROGRAMADA", tiempoPregunta - 3600000) // Guardamos la hora de inicio original
         }
 
         val pendingIntent = PendingIntent.getBroadcast(

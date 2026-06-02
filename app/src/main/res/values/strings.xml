@@ -25,4 +25,11 @@
     <string name="toast_rutina_activada">¡Rutina activada! Búscala en tu lista de tareas.</string>
     <string name="toast_error_activar">Error al activar rutina</string>
     <string name="toast_error_conexion">Error de conexión</string>
+
+    <!-- Notificaciones de Tareas -->
+    <string name="notif_titulo_pregunta">¿Terminaste tu tarea?</string>
+    <string name="notif_cuerpo_pregunta">¿Has culminado la actividad: %s?</string>
+    <string name="notif_accion_si">SÍ, COMPLETADA</string>
+    <string name="notif_accion_no">NO COMPLETADA</string>
+    <string name="btn_confirmar_ubicacion">Confirmar Ubicación</string>
 </resources>
