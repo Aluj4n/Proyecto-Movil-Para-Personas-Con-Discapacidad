@@ -13,7 +13,7 @@
         android:id="@+id/menuOpciones"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/barra_arriba"
+        android:background="@color/focus_primary_container"
         app:navigationIcon="@null"
         app:contentInsetStart="16dp">
 

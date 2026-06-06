@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image_chatbot"
+    android:background="@color/focus_background"
     android:orientation="vertical"
     android:padding="37dp"
     tools:context=".MainActivity">
